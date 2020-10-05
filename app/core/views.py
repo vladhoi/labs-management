@@ -2,5 +2,5 @@ from django.http import JsonResponse
 
 
 def index(request):
-    data = {"test": "just a test"}
+    data = {"test": "testing"}
     return JsonResponse(data)
