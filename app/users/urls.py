@@ -15,13 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
 
-from .views import UserViewSet
+from .views import UserList, UserProfileView
 
-router = routers.SimpleRouter()
-router.register(r'', UserViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', UserList.as_view()),
+    path('<int:pk>/profile/',
+             UserProfileView.as_view(), name='user-profile'),
 ]

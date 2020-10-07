@@ -1,15 +1,16 @@
 import pytest
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
+from users.models import UserProfile, User
 
-from users.models import BasicUser
 
-
-@pytest.mark.django_db
-def test_user_model():
-    test_user = BasicUser(first_name="Test", last_name="Test", age="12")
-    test_user.save()
-
-    assert test_user.first_name == "Test"
-    assert test_user.last_name == "Test"
-    assert test_user.age == "12"
-    assert test_user.created_date
-    assert test_user.updated_date
+def test_create_account():
+    """
+    Ensure we can create a new account object.
+    """
+    client = APIClient()
+    url = reverse('users')
+    response = client.get(url, format='json')
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 1
