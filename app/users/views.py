@@ -16,17 +16,14 @@ class UserList(generics.ListAPIView):
 
 
 class UserProfileView(APIView):
-
     def get(self, request, pk):
         profile = UserProfile.objects.get(user=pk)
         serializer = UserProfileSerializer(profile)
         return Response(serializer.data)
 
     def post(self, request, pk):
-        profile = UserProfile(
-            **request.data
-        )
+        profile = UserProfile(**request.data)
         profile.user = get_user_model().objects.get(pk=pk)
         profile.save()
 
-        return Response('Success')
+        return Response("Success")
