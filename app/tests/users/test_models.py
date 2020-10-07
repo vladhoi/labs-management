@@ -1,16 +1,16 @@
 import pytest
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APIClient
-from users.models import UserProfile, User
 
 
-def test_create_account():
+@pytest.mark.django_db
+def test_create_user():
     """
-    Ensure we can create a new account object.
+    Ensure we can create a new user object.
     """
-    client = APIClient()
-    url = reverse('users')
-    response = client.get(url, format='json')
-    assert response.status_code == status.HTTP_200_OK
-    assert len(response.data) == 1
+
+
+@pytest.mark.django_db
+@pytest.mark.xfail
+def test_create_user_fail():
+    """
+    Ensure we can't create a new user object with unvalid data.
+    """
