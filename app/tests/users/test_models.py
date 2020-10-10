@@ -3,43 +3,6 @@ from django.core.exceptions import ValidationError
 from users.models import User
 
 
-@pytest.fixture()
-def create_valid_user():
-    """
-    Make fixture that return valid user object.
-    """
-    data = {
-        "email": "example@mail.com",
-        "password": "S_t_r_o_n_g"
-    }
-    return User.objects.create_user(**data)
-
-
-@pytest.fixture(params=[
-    {
-        "email": "mail",
-        "password": "pass1234"
-    },
-    {
-        "email": "example@mail.com",
-        "password": "1234567"
-    },
-    {
-        "email": "example@mail.com",
-        "password": "abcdefgh"
-    },
-    {
-        "email": "example@mail.com",
-        "password": "pass"
-    }
-])
-def invalid_user_data(request):
-    """
-    Make fixtures that return invalid user object.
-    """
-    return request.param
-
-
 @pytest.mark.django_db
 def test_create_user(create_valid_user):
     """
@@ -70,7 +33,11 @@ def test_create_user_fail(invalid_user_data):
 
 
 @pytest.mark.django_db
+@pytest.mark.uniq
 def test_uniqueness_user(create_valid_user):
     """
-    Ensure we can't create the same user object.
+    Ensure we can't save the same user object.
     """
+    create_valid_user.save()
+    create_valid_user.save()
+    assert User.objects.count() == 1
