@@ -5,6 +5,9 @@ from users.models import User
 
 @pytest.fixture()
 def create_valid_user():
+    """
+    Make fixture that return valid user object.
+    """
     data = {
         "email": "example@mail.com",
         "password": "S_t_r_o_n_g"
@@ -31,6 +34,9 @@ def create_valid_user():
     }
 ])
 def invalid_user_data(request):
+    """
+    Make fixtures that return invalid user object.
+    """
     return request.param
 
 
@@ -60,11 +66,10 @@ def test_create_user_fail(invalid_user_data):
     """
     Ensure we can't create a new user object with invalid data (email and password).
     """
-    u = User.objects.create_user(**invalid_user_data)
+    User.objects.create_user(**invalid_user_data)
 
 
 @pytest.mark.django_db
-@pytest.mark.uniq
 def test_uniqueness_user(create_valid_user):
     """
     Ensure we can't create the same user object.
