@@ -17,6 +17,7 @@ from django.urls import path
 
 from .views import UserList, UserProfileView
 
+
 urlpatterns = [
     path("", UserList.as_view()),
     path("<int:pk>/profile/", UserProfileView.as_view(), name="user-profile"),
