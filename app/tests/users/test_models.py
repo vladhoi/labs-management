@@ -12,5 +12,5 @@ def test_create_user():
 @pytest.mark.xfail
 def test_create_user_fail():
     """
-    Ensure we can't create a new user object with unvalid data.
+    Ensure we can't create a new user object with unvalid data (email and password).
     """
