@@ -18,9 +18,9 @@ from .views import UserList, UserProfileView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register("", UserList, basename='user-list')
+router.register("", UserList, basename="user-list")
 
 urlpatterns = [
     path("<int:pk>/profile/", UserProfileView.as_view(), name="user-profile")
-    ]
+]
 urlpatterns += router.urls
