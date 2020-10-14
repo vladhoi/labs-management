@@ -8,7 +8,7 @@ from .serializers import UserSerializer, UserProfileSerializer
 from .models import User, UserProfile
 
 
-class UserList(generics.ListAPIView, viewsets.ModelViewSet):
+class UserList(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
