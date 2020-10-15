@@ -1,8 +1,14 @@
 from django.urls import path
+from rest_framework import routers
 
-from .views import LectureView
+from .views import LectureViewList, LectureView
 
 """
 Django REST url
 """
-urlpatterns = [path("lecture/<int:pk>", LectureView.as_view())]
+
+router = routers.DefaultRouter()
+router.register("", LectureViewList, basename="lectures")
+urlpatterns = [path("new/", LectureView.as_view())]
+
+urlpatterns += router.urls

@@ -6,7 +6,7 @@ from .models import Lecture
 class LectureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
-        fields = ["title", "text", "subject"]
+        fields = "__all__"
 
     def create(self, validated_data):
         return Lecture.objects.create(**validated_data)
