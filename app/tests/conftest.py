@@ -1,4 +1,5 @@
 import pytest
+from django.test import Client
 from lectures.models import Lecture
 from subjects.models import Subject
 from users.models import User
@@ -69,3 +70,5 @@ def create_second_valid_lecture(create_valid_user, create_valid_subject):
     }
 
     return Lecture.objects.create(**data)
+
+
