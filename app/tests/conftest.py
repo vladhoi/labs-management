@@ -2,6 +2,7 @@ import pytest
 from lectures.models import Lecture
 from subjects.models import Subject
 from users.models import User
+from assignments.models import Assignment
 
 
 @pytest.fixture()
@@ -69,3 +70,16 @@ def create_second_valid_lecture(create_valid_user, create_valid_subject):
     }
 
     return Lecture.objects.create(**data)
+
+
+@pytest.fixture()
+def create_valid_assigment(create_valid_user):
+    """
+    Make fixture that return valid assigment
+    """
+    data = {
+        "title": "Test",
+        "description": "Test test test",
+        "created_by": create_valid_user,
+    }
+    return Assignment.objects.create(**data)
