@@ -2,8 +2,7 @@ import pytest
 from lectures.models import Lecture
 from subjects.models import Subject
 from users.models import User
-from assignments.models import Assignment
-
+from assigment.models import Assigment
 
 @pytest.fixture()
 def create_valid_user():
