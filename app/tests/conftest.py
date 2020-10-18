@@ -1,8 +1,11 @@
 import pytest
+from datetime import date
 from lectures.models import Lecture
 from subjects.models import Subject
 from users.models import User
-from assigment.models import Assigment
+from assignments.models import Assignment
+from django.conf import settings
+
 
 @pytest.fixture()
 def create_valid_user():
@@ -82,3 +85,10 @@ def create_valid_assigment(create_valid_user):
         "created_by": create_valid_user,
     }
     return Assignment.objects.create(**data)
+
+
+@pytest.fixture
+def lab_path():
+    today = date.today()
+    LABS_PATH = f"labs/{today.year}/{today.month}/{today.day}"
+    return f"{settings.MEDIA_ROOT}/{LABS_PATH}/"
