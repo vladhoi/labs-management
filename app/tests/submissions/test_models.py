@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 @pytest.mark.django_db
-def test_create_submissions(create_valid_user, create_valid_assigment):
+def test_create_submission(create_valid_user, create_valid_assigment):
     """
     Ensure we can create a new submission.
     """
