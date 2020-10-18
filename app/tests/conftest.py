@@ -3,6 +3,7 @@ from lectures.models import Lecture
 from subjects.models import Subject
 from users.models import User
 from assignments.models import Assignment
+from django.test import override_settings
 
 
 @pytest.fixture()
@@ -83,3 +84,11 @@ def create_valid_assigment(create_valid_user):
         "created_by": create_valid_user,
     }
     return Assignment.objects.create(**data)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def custom_media_root(tmpdir_factory):
+    overrided_media_root = override_settings(
+        MEDIA_ROOT=str(tmpdir_factory.mktemp("test_media"))
+    )
+    overrided_media_root.enable()
