@@ -4,6 +4,7 @@ from subjects.models import Subject
 from users.models import User
 from assignments.models import Assignment
 from django.test import override_settings
+from rest_framework.test import APIClient
 
 
 @pytest.fixture()
@@ -11,6 +12,8 @@ def create_valid_user():
     """
     Make fixture that return valid user.
     """
+    client = APIClient()
+    client.credentials(HTTP_AUTHORIZATION=f"Token {token}")
     data = {"email": "example@mail.com", "password": "S_t_r_o_n_g"}
     return User.objects.create_user(**data)
 
@@ -92,3 +95,25 @@ def custom_media_root(tmpdir_factory):
         MEDIA_ROOT=str(tmpdir_factory.mktemp("test_media"))
     )
     overrided_media_root.enable()
+
+
+@pytest.fixture
+def token(user):
+    from rest_framework.authtoken.models import Token
+
+    token, _ = Token.objects.get_or_create(user=user)
+    return token.key
+
+
+@pytest.fixture
+def user_client(token):
+    client = APIClient()
+    client.credentials(HTTP_AUTHORIZATION=f"Token {token}")
+    return client
+
+
+@pytest.fixture
+def user(django_user_model):
+    return django_user_model.objects.create_user(
+        email="justates@gmail.com", password="1234567test"
+    )
