@@ -1,10 +1,12 @@
 import pytest
 from lectures.models import Lecture
 from subjects.models import Subject
+from submissions.models import Submission
 from users.models import User
 from assignments.models import Assignment
 from django.test import override_settings
 from rest_framework.test import APIClient
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 @pytest.fixture()
@@ -117,3 +119,48 @@ def user(django_user_model):
     return django_user_model.objects.create_user(
         email="justates@gmail.com", password="1234567test"
     )
+
+
+@pytest.fixture()
+def create_second_valid_subject(create_valid_user):
+    """
+    Make fixture that return valid subject.
+    """
+    data = {
+        "title": "Subject_2",
+        "description": "Description",
+        "user": create_valid_user,
+    }
+    return Subject.objects.create(**data)
+
+
+@pytest.fixture()
+def create_valid_submission(create_valid_user, create_valid_assigment):
+    """
+    Make fixture that return valid submission
+    """
+    data = {
+        "feedback": "Test test test",
+        "attached_file": SimpleUploadedFile(
+            "labtest.txt", b"these are the contents of the txt file"
+        ),
+        "assigment": create_valid_assigment,
+        "created_by": create_valid_user,
+    }
+    return Submission.objects.create(**data)
+
+
+@pytest.fixture()
+def create_second_valid_submission(create_valid_user, create_valid_assigment):
+    """
+    Make fixture that return valid submission
+    """
+    data = {
+        "feedback": "Second test",
+        "attached_file": SimpleUploadedFile(
+            "labtest.txt", b"these are the contents of the another txt file"
+        ),
+        "assigment": create_valid_assigment,
+        "created_by": create_valid_user,
+    }
+    return Submission.objects.create(**data)
