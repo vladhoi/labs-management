@@ -37,7 +37,7 @@ def test_post_lecture_success(create_valid_user, create_valid_subject, user_clie
 
 
 @pytest.mark.django_db
-def test_post_lecture_failure(create_valid_user, create_valid_subject, user_client):
+def test_post_lecture_fail(create_valid_user, create_valid_subject, user_client):
     """
     Ensure we can't add new lecture.
     """
