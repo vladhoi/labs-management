@@ -40,7 +40,7 @@ def test_post_user_success(user_client):
     Ensure we can add new user.
     """
     response = user_client.post(
-        f"/api/v1/users/",
+        "/api/v1/users/",
         {"email": "email@mail.com", "password": "S_t_r_o_n_g"},
     )
     assert response.status_code == status.HTTP_201_CREATED

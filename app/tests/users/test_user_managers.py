@@ -13,23 +13,21 @@ def test_create_user():
 
 
 @pytest.mark.django_db
-# @pytest.mark.run
 def test_create_user_is_admin_false():
     """
     Ensure created user isn't admin.
     """
     user = User.objects.create_user(email="example@mail.com", password="S_t_r_o_n_g")
-    assert user.is_admin == False
+    assert user.is_admin is False
 
 
 @pytest.mark.django_db
-# @pytest.mark.run
 def test_create_user_is_staff_false():
     """
     Ensure created user isn't staff.
     """
     user = User.objects.create_user(email="example@mail.com", password="S_t_r_o_n_g")
-    assert user.is_staff == False
+    assert user.is_staff is False
 
 
 @pytest.mark.django_db
@@ -48,7 +46,9 @@ def test_create_superuser():
     """
     Ensure we can create superuser.
     """
-    user = User.objects.create_superuser(email="example@mail.com", password="S_t_r_o_n_g")
+    user = User.objects.create_superuser(
+        email="example@mail.com", password="S_t_r_o_n_g"
+    )
     assert user.email == "example@mail.com"
 
 
@@ -59,7 +59,7 @@ def test_create_superuser_fail():
     """
     Ensure we can't create superuser without email.
     """
-    user = User.objects.create_superuser(email=None, password="S_t_r_o_n_g")
+    User.objects.create_superuser(email=None, password="S_t_r_o_n_g")
 
 
 @pytest.mark.django_db
@@ -68,8 +68,10 @@ def test_create_superuser_is_admin_true():
     """
     Ensure created superuser is admin.
     """
-    user = User.objects.create_superuser(email="example@mail.com", password="S_t_r_o_n_g")
-    assert user.is_admin == True
+    user = User.objects.create_superuser(
+        email="example@mail.com", password="S_t_r_o_n_g"
+    )
+    assert user.is_admin is True
 
 
 @pytest.mark.django_db
@@ -78,5 +80,7 @@ def test_create_superuser_is_staff_true():
     """
     Ensure created superuser is staff.
     """
-    user = User.objects.create_superuser(email="example@mail.com", password="S_t_r_o_n_g")
-    assert user.is_staff == True
+    user = User.objects.create_superuser(
+        email="example@mail.com", password="S_t_r_o_n_g"
+    )
+    assert user.is_staff is True
