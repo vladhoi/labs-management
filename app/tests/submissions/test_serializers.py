@@ -16,10 +16,10 @@ def test_get_all_submissions(
     response = user_client.get(reverse("submissions-list"))
     submissions = Submission.objects.all()
     serializer = SubmissionSerializer(submissions, many=True)
-    serializer_copy = serializer.data
-    for submission in serializer_copy:
+    serializer_copies = serializer.data
+    for submission in serializer_copies:
         submission["attached_file"] = "http://testserver" + submission["attached_file"]
-    assert response.data == serializer_copy
+    assert response.data == serializer_copies
 
 
 @pytest.mark.django_db
