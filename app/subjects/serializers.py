@@ -5,7 +5,7 @@ from subjects.models import Subject
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ["id", "title", "description"]
+        fields = ("id", "title", "description", "user")
 
     def create(self, validated_data):
         """
