@@ -49,3 +49,13 @@ def test_create_submission_without_user(create_valid_assigment):
             assigment=create_valid_assigment,
             created_by=None,
         )
+
+
+@pytest.mark.django_db
+def test_delete_submission(create_valid_submission):
+    """
+    Ensure we can delete a submission.
+    """
+    submit = create_valid_submission
+    res = Submission.objects.filter(pk=submit.pk).delete()
+    assert res[0] == 1
