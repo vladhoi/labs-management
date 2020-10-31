@@ -30,6 +30,7 @@ test:
   image: $IMAGE:latest
   services:
     - postgres:latest
+  coverage: '/TOTAL\s+\d+\s+\d+\s+(\d+%)/'
   variables:
     POSTGRES_DB: users
     POSTGRES_USER: runner
