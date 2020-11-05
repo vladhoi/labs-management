@@ -6,7 +6,6 @@ from users.models import User
 from assignments.models import Assignment
 from django.test import override_settings
 from rest_framework.test import APIClient
-from submissions.models import Submission
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
@@ -80,7 +79,7 @@ def create_second_valid_lecture(create_valid_user, create_valid_subject):
 
 
 @pytest.fixture()
-def create_valid_assigment(create_valid_user):
+def create_valid_assignment(create_valid_user):
     """
     Make fixture that return valid assigment
     """
@@ -136,7 +135,7 @@ def create_second_valid_subject(create_valid_user):
 
 
 @pytest.fixture()
-def create_valid_submission(create_valid_user, create_valid_assigment):
+def create_valid_submission(create_valid_user, create_valid_assignment):
     """
     Make fixture that return valid submission
     """
@@ -145,14 +144,14 @@ def create_valid_submission(create_valid_user, create_valid_assigment):
         "attached_file": SimpleUploadedFile(
             "labtest.txt", b"these are the contents of the txt file"
         ),
-        "assigment": create_valid_assigment,
+        "assignment": create_valid_assignment,
         "created_by": create_valid_user,
     }
     return Submission.objects.create(**data)
 
 
 @pytest.fixture()
-def create_second_valid_submission(create_valid_user, create_valid_assigment):
+def create_second_valid_submission(create_valid_user, create_valid_assignment):
     """
     Make fixture that return valid submission
     """
@@ -161,7 +160,20 @@ def create_second_valid_submission(create_valid_user, create_valid_assigment):
         "attached_file": SimpleUploadedFile(
             "labtest.txt", b"these are the contents of the another txt file"
         ),
-        "assigment": create_valid_assigment,
+        "assignment": create_valid_assignment,
         "created_by": create_valid_user,
     }
     return Submission.objects.create(**data)
+
+
+@pytest.fixture()
+def create_second_valid_assignment(create_valid_user):
+    """
+    Make fixture that return valid assignment
+    """
+    data = {
+        "title": "Second Test",
+        "description": "Test test test",
+        "created_by": create_valid_user,
+    }
+    return Assignment.objects.create(**data)

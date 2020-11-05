@@ -43,3 +43,15 @@ def test_create_subject_without_title(create_valid_user):
             description="Test test test",
             user=create_valid_user,
         )
+
+
+@pytest.mark.django_db
+@pytest.mark.xfail(raises=IntegrityError)
+def test_create_two_equal_subject(create_valid_subject):
+    """
+    Ensure we can't create two equal subject.
+    """
+    create_valid_subject.save()
+    create_valid_subject.save()
+
+    assert Subject.objects.count() == 1

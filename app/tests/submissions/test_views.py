@@ -15,7 +15,7 @@ def test_submission_list_response(url, user_client):
 
 @pytest.mark.django_db
 def test_post_submission_success(
-    create_valid_user, create_valid_assigment, user_client
+    create_valid_user, create_valid_assignment, user_client
 ):
     """
     Ensure we can add new submission.
@@ -23,14 +23,14 @@ def test_post_submission_success(
     attached_file = SimpleUploadedFile(
         "labtest.txt", b"these are the contents of the txt file"
     )
-    assigment = create_valid_assigment
+    assignment = create_valid_assignment
     created_by = create_valid_user
     response = user_client.post(
         "/api/v1/submissions/",
         {
             "feedback": "Test test test",
             "attached_file": attached_file,
-            "assigment": assigment.pk,
+            "assignment": assignment.pk,
             "created_by": created_by.pk,
         },
     )
@@ -48,20 +48,20 @@ def test_submission_error_response(user_client):
 
 @pytest.mark.django_db
 def test_post_submission_failure(
-    create_valid_user, create_valid_assigment, user_client
+    create_valid_user, create_valid_assignment, user_client
 ):
     """
     Ensure we can add new submission.
     """
     attached_file = ""
-    assigment = create_valid_assigment
+    assignment = create_valid_assignment
     created_by = create_valid_user
     response = user_client.post(
         "/api/v1/submissions/",
         {
             "feedback": "Test test test",
             "attached_file": attached_file,
-            "assigment": assigment.pk,
+            "assignment": assignment.pk,
             "created_by": created_by.pk,
         },
     )

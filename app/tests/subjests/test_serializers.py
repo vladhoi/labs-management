@@ -32,7 +32,7 @@ def test_get_single_subject(create_valid_subject, user_client):
 
 
 @pytest.mark.django_db
-def test_handle_non_existed_lecture_properly(user_client):
+def test_handle_non_existed_subject_properly(user_client):
     """
     Ensure we get non-existed subject in proper format.
     """
