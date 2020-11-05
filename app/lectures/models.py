@@ -7,6 +7,11 @@ from subjects.models import Subject
 
 
 class Lecture(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["title", "user"], name="unique_lecture")
+        ]
+
     title = models.CharField(max_length=100, blank=False)
     text = models.TextField()
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
