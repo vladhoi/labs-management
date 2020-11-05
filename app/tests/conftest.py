@@ -6,6 +6,7 @@ from users.models import User
 from assignments.models import Assignment
 from django.test import override_settings
 from rest_framework.test import APIClient
+from submissions.models import Submission
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
