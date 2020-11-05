@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 @pytest.mark.django_db
-def test_create_submission(create_valid_user, create_valid_assigment):
+def test_create_submission(create_valid_user, create_valid_assignment):
     """
     Ensure we can create a new submission.
     """
@@ -13,7 +13,7 @@ def test_create_submission(create_valid_user, create_valid_assigment):
     submission = Submission.objects.create(
         feedback="Test test test",
         attached_file=file,
-        assigment=create_valid_assigment,
+        assignment=create_valid_assignment,
         created_by=create_valid_user,
     )
 
@@ -22,22 +22,22 @@ def test_create_submission(create_valid_user, create_valid_assigment):
 
 
 @pytest.mark.django_db
-def test_create_submission_without_assigment(create_valid_user):
+def test_create_submission_without_assignment(create_valid_user):
     """
-    Ensure we can't create a new submission without a assigment.
+    Ensure we can't create a new submission without a assignment.
     """
     file = SimpleUploadedFile("labtest.txt", b"these are the contents of the txt file")
     with pytest.raises(IntegrityError):
         Submission.objects.create(
             feedback="Test test test",
             attached_file=file,
-            assigment=None,
+            assignment=None,
             created_by=create_valid_user,
         )
 
 
 @pytest.mark.django_db
-def test_create_submission_without_user(create_valid_assigment):
+def test_create_submission_without_user(create_valid_assignment):
     """
     Ensure we can't create a new submission without a user.
     """
@@ -46,7 +46,7 @@ def test_create_submission_without_user(create_valid_assigment):
         Submission.objects.create(
             feedback="Test test test",
             attached_file=file,
-            assigment=create_valid_assigment,
+            assignment=create_valid_assignment,
             created_by=None,
         )
 
