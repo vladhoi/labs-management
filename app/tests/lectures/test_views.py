@@ -48,3 +48,35 @@ def test_post_lecture_fail(create_valid_user, create_valid_subject, user_client)
         {"title": "", "text": "Text", "user": user.pk, "subject": subject.pk},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_post_uniqueness(create_valid_user, create_valid_subject, user_client):
+    """
+    Ensure we can't add equal lectures.
+    """
+    user = create_valid_user
+    subject = create_valid_subject
+    response = user_client.post(
+        "/api/v1/lectures/",
+        {
+            "title": "Python programming",
+            "text": "Basic operators",
+            "user": user.pk,
+            "subject": subject.pk,
+        },
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+
+    user = create_valid_user
+    subject = create_valid_subject
+    response = user_client.post(
+        "/api/v1/lectures/",
+        {
+            "title": "Python programming",
+            "text": "Basic operators",
+            "user": user.pk,
+            "subject": subject.pk,
+        },
+    )
+    assert response.status_code == status.HTTP_400_BAD_REQUEST

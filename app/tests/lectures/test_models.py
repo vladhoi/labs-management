@@ -37,3 +37,15 @@ def test_create_lecture_without_subject(create_valid_user):
     """
     data = {"title": "Lecture", "text": "Text", "user": create_valid_user}
     Lecture.objects.create(**data)
+
+
+@pytest.mark.django_db
+@pytest.mark.xfail(raises=IntegrityError)
+def test_create_two_equal_lectures(create_valid_lecture):
+    """
+    Ensure we can't create two equal lectures.
+    """
+    create_valid_lecture.save()
+    create_valid_lecture.save()
+
+    assert Lecture.objects.count() == 1
