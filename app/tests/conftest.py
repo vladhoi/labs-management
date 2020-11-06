@@ -200,6 +200,7 @@ def dummy_model(django_db_blocker):
         )
 
         with connection.schema_editor() as se:
+            connection.disable_constraint_checking()
             se.create_model(DummyModel)
 
         yield DummyModel
