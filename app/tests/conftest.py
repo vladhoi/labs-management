@@ -1,5 +1,5 @@
 import pytest
-from django.db import connection, OperationalError
+from django.db import connection
 from django.db.models.base import ModelBase
 from lectures.models import Lecture
 from subjects.models import Subject
@@ -185,22 +185,23 @@ def create_second_valid_assignment(create_valid_user):
 
 @pytest.fixture()
 @pytest.mark.django_db
-def dummy_model(django_db_blocker):
+def dummy_model():
     """
     Fixture for dummy model, which inherits AbstractTableMeta
     """
-    with django_db_blocker.unblock():
 
-        mixin = AbstractTableMeta
+    mixin = AbstractTableMeta
 
-        DummyModel = ModelBase(
-            mixin.__name__,
-            (mixin,),
-            {"__module__": mixin.__module__},
-        )
+    DummyModel = ModelBase(
+        mixin.__name__,
+        (mixin,),
+        {"__module__": mixin.__module__},
+    )
 
-        with connection.schema_editor() as se:
-            connection.disable_constraint_checking()
-            se.create_model(DummyModel)
+    with connection.schema_editor() as se:
+        se.create_model(DummyModel)
 
-        yield DummyModel
+    yield DummyModel
+
+    with connection.schema_editor() as schema_editor:
+        schema_editor.delete_model(DummyModel)

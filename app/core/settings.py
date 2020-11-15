@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     "lectures",
     "submissions",
     "authapp",
-    "utils"
+    "utils",
 ]
 
 MIDDLEWARE = [
