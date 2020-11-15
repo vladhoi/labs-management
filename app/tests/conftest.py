@@ -1,4 +1,6 @@
 import pytest
+from django.db import connection
+from django.db.models.base import ModelBase
 from lectures.models import Lecture
 from subjects.models import Subject
 from submissions.models import Submission
@@ -7,6 +9,8 @@ from assignments.models import Assignment
 from django.test import override_settings
 from rest_framework.test import APIClient
 from django.core.files.uploadedfile import SimpleUploadedFile
+
+from utils.models import AbstractTableMeta
 
 
 @pytest.fixture()
@@ -177,3 +181,27 @@ def create_second_valid_assignment(create_valid_user):
         "created_by": create_valid_user,
     }
     return Assignment.objects.create(**data)
+
+
+@pytest.fixture()
+@pytest.mark.django_db
+def dummy_model():
+    """
+    Fixture for dummy model, which inherits AbstractTableMeta
+    """
+
+    mixin = AbstractTableMeta
+
+    DummyModel = ModelBase(
+        mixin.__name__,
+        (mixin,),
+        {"__module__": mixin.__module__},
+    )
+
+    with connection.schema_editor() as se:
+        se.create_model(DummyModel)
+
+    yield DummyModel
+
+    with connection.schema_editor() as schema_editor:
+        schema_editor.delete_model(DummyModel)
