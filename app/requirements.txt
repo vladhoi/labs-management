@@ -8,6 +8,7 @@ click==7.1.2
 coverage==5.3
 dj-database-url==0.5.0
 Django==3.1.2
+django-cors-headers==3.5.0
 django-templated-mail==1.1.1
 djangorestframework==3.11.1
 djoser==2.0.5
