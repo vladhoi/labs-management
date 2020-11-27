@@ -19,3 +19,8 @@ Run the tests:
 ```console
 $ docker-compose exec api pytest -p no:warnings
 ```
+[Client repository](https://github.com/Chay23/react-app)
+
+![Alt text](docs/schema_viz.png?raw=true)
+
+![Alt text](docs/10kfeetview.jpg?raw=true)
