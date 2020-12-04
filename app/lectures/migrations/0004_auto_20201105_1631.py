@@ -6,17 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lectures', '0003_auto_20201105_1618'),
+        ("lectures", "0003_auto_20201105_1618"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='lecture',
-            name='title',
+            model_name="lecture",
+            name="title",
             field=models.CharField(max_length=100),
         ),
         migrations.AddConstraint(
-            model_name='lecture',
-            constraint=models.UniqueConstraint(fields=('title', 'user'), name='unique_lecture'),
+            model_name="lecture",
+            constraint=models.UniqueConstraint(
+                fields=("title", "user"), name="unique_lecture"
+            ),
         ),
     ]

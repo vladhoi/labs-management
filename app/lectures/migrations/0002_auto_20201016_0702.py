@@ -9,24 +9,28 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('subjects', '0002_auto_20201008_1502'),
-        ('lectures', '0001_initial'),
+        ("subjects", "0002_auto_20201008_1502"),
+        ("lectures", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='lecture',
-            name='subject',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='subjects.subject'),
+            model_name="lecture",
+            name="subject",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="subjects.subject"
+            ),
         ),
         migrations.AlterField(
-            model_name='lecture',
-            name='title',
+            model_name="lecture",
+            name="title",
             field=models.CharField(max_length=100),
         ),
         migrations.AlterField(
-            model_name='lecture',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="lecture",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

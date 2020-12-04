@@ -57,3 +57,14 @@ def test_post_user_fail(create_valid_user, user_client):
         {"email": "email@mail.com"},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_userprofile_error_response(create_valid_user, user_client):
+    """
+    Ensure we get error 404 while trying to connect to non-exist user profile url.
+    """
+    user = create_valid_user
+    url = f"/api/v1/users/{user.pk}/profile/"
+    response = user_client.get(url)
+    assert response.status_code == status.HTTP_404_NOT_FOUND

@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .serializers import UserSerializer, UserProfileSerializer
 from .models import User, UserProfile
+from django.shortcuts import get_object_or_404
 
 
 @permission_classes([IsAuthenticated])
@@ -20,8 +21,9 @@ class UserList(viewsets.ModelViewSet):
 @permission_classes([IsAuthenticated])
 class UserProfileView(APIView):
     def get(self, request, pk):
-        profile = UserProfile.objects.get(user=pk)
+        profile = get_object_or_404(UserProfile, user=pk)
         serializer = UserProfileSerializer(profile)
+
         return Response(serializer.data)
 
     def post(self, request, pk):

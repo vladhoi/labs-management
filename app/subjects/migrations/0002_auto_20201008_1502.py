@@ -9,20 +9,24 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('subjects', '0001_initial'),
+        ("subjects", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subject',
-            name='description',
-            field=models.TextField(default='description'),
+            model_name="subject",
+            name="description",
+            field=models.TextField(default="description"),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='subject',
-            name='user',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='users.user'),
+            model_name="subject",
+            name="user",
+            field=models.ForeignKey(
+                default=None,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="users.user",
+            ),
             preserve_default=False,
         ),
     ]
