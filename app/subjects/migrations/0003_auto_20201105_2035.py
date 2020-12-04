@@ -6,12 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('subjects', '0002_auto_20201008_1502'),
+        ("subjects", "0002_auto_20201008_1502"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='subject',
-            constraint=models.UniqueConstraint(fields=('title', 'user'), name='unique_subject'),
+            model_name="subject",
+            constraint=models.UniqueConstraint(
+                fields=("title", "user"), name="unique_subject"
+            ),
         ),
     ]
