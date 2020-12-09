@@ -3,7 +3,6 @@ from users.models import User
 
 
 @pytest.mark.django_db
-# @pytest.mark.run
 def test_create_user():
     """
     Ensure we can create a new user.
@@ -19,6 +18,15 @@ def test_create_user_is_admin_false():
     """
     user = User.objects.create_user(email="example@mail.com", password="S_t_r_o_n_g")
     assert user.is_admin is False
+
+
+@pytest.mark.django_db
+def test_create_user_is_student_false():
+    """
+    Ensure created user isn't a student.
+    """
+    user = User.objects.create_user(email="example@mail.com", password="S_t_r_o_n_g")
+    assert user.is_student is False
 
 
 @pytest.mark.django_db

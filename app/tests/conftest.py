@@ -4,7 +4,7 @@ from django.db.models.base import ModelBase
 from lectures.models import Lecture
 from subjects.models import Subject
 from submissions.models import Submission
-from users.models import User
+from users.models import User, UserProfile
 from assignments.models import Assignment
 from django.test import override_settings
 from rest_framework.test import APIClient
@@ -16,7 +16,7 @@ from utils.models import AbstractTableMeta
 @pytest.fixture()
 def create_valid_user():
     """
-    Make fixture that return valid user.
+    Make fixture that returns valid user.
     """
     client = APIClient()
     client.credentials(HTTP_AUTHORIZATION=f"Token {token}")
@@ -34,7 +34,7 @@ def create_valid_user():
 )
 def invalid_user_data(request):
     """
-    Make fixtures that return invalid user.
+    Make fixtures that returns invalid user.
     """
     return request.param
 
@@ -42,7 +42,7 @@ def invalid_user_data(request):
 @pytest.fixture()
 def create_valid_subject(create_valid_user):
     """
-    Make fixture that return valid subject.
+    Make fixture that returns valid subject.
     """
     data = {
         "title": "Subject_1",
@@ -55,7 +55,7 @@ def create_valid_subject(create_valid_user):
 @pytest.fixture()
 def create_valid_lecture(create_valid_user, create_valid_subject):
     """
-    Make fixture that return valid lecture.
+    Make fixture that returns valid lecture.
     """
     data = {
         "title": "Lecture_1",
@@ -85,7 +85,7 @@ def create_second_valid_lecture(create_valid_user, create_valid_subject):
 @pytest.fixture()
 def create_valid_assignment(create_valid_user):
     """
-    Make fixture that return valid assigment
+    Make fixture that returns valid assigment
     """
     data = {
         "title": "Test",
@@ -128,7 +128,7 @@ def user(django_user_model):
 @pytest.fixture()
 def create_second_valid_subject(create_valid_user):
     """
-    Make fixture that return valid subject.
+    Make fixture that returns valid subject.
     """
     data = {
         "title": "Subject_2",
@@ -141,7 +141,7 @@ def create_second_valid_subject(create_valid_user):
 @pytest.fixture()
 def create_valid_submission(create_valid_user, create_valid_assignment):
     """
-    Make fixture that return valid submission
+    Make fixture that returns valid submission
     """
     data = {
         "feedback": "Test test test",
@@ -157,7 +157,7 @@ def create_valid_submission(create_valid_user, create_valid_assignment):
 @pytest.fixture()
 def create_second_valid_submission(create_valid_user, create_valid_assignment):
     """
-    Make fixture that return valid submission
+    Make fixture that returns valid submission
     """
     data = {
         "feedback": "Second test",
@@ -173,7 +173,7 @@ def create_second_valid_submission(create_valid_user, create_valid_assignment):
 @pytest.fixture()
 def create_second_valid_assignment(create_valid_user):
     """
-    Make fixture that return valid assignment
+    Make fixture that returns valid assignment
     """
     data = {
         "title": "Second Test",
@@ -205,3 +205,23 @@ def dummy_model():
 
     with connection.schema_editor() as schema_editor:
         schema_editor.delete_model(DummyModel)
+
+
+@pytest.fixture()
+def user_with_profile(create_valid_user):
+    """
+    Make fixture that return valid assignment
+    """
+
+    def __instance(**kwargs):
+        data = {
+            "user": create_valid_user,
+            "first_name": "test",
+            "last_name": "test",
+            "group": "",
+        }
+        data.update(kwargs)
+        user_profile = UserProfile(**data)
+        return user_profile
+
+    return __instance

@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from .models import UserProfile
 
 
-class UserSerializer(serializers.ModelSerializer):
+class NewUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ("id", "email", "password")
@@ -13,9 +13,16 @@ class UserSerializer(serializers.ModelSerializer):
         return get_user_model().objects.create_user(**validated_data)
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ("id", "email", "is_staff", "is_student")
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
+    user = UserSerializer(many=False, read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = "__all__"
+        fields = ("user", "first_name", "last_name", "group")
+        depth = 1
