@@ -4,18 +4,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserSerializer, UserProfileSerializer
+from .serializers import UserSerializer, NewUserSerializer, UserProfileSerializer
 from .models import User, UserProfile
 from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView
 
 
 @permission_classes([IsAuthenticated])
 class UserList(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
 
-    # def list(self, request, *args, **kwargs):
-    #    raise PermissionDenied()
+    def get_serializer_class(self):
+        if self.action == "create":
+            return NewUserSerializer
+        return UserSerializer
 
 
 @permission_classes([IsAuthenticated])
@@ -32,3 +34,30 @@ class UserProfileView(APIView):
         profile.save()
 
         return Response("Success")
+
+
+@permission_classes([IsAuthenticated])
+class UserProfileList(ListAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = UserProfileSerializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+
+@permission_classes([IsAuthenticated])
+class GroupUserListView(ListAPIView):
+    serializer_class = UserProfileSerializer
+
+    def get_queryset(self):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        group = kwargs.get("group", "")
+        queryset = UserProfile.objects.filter(group=group)
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
