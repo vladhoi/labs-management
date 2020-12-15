@@ -25,7 +25,7 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="Labs management API",
         default_version="v1",
         description="Labs management api docs.",
         terms_of_service="https://www.google.com/policies/terms/",
