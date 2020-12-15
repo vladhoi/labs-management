@@ -6,7 +6,7 @@ from rest_framework.validators import UniqueTogetherValidator
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ("title", "description")
+        fields = ("id", "title", "description")
 
         validators = [
             UniqueTogetherValidator(
