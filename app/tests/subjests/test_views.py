@@ -17,10 +17,9 @@ def test_post_subject_success(create_valid_user, user_client):
     """
     Ensure we can add new subject.
     """
-    user = create_valid_user
     response = user_client.post(
         "/api/v1/subjects/",
-        {"title": "test", "description": "test test test", "user": user.pk},
+        {"title": "test", "description": "test test test"},
     )
     assert response.status_code == status.HTTP_201_CREATED
 
@@ -39,10 +38,9 @@ def test_post_subject_failure(create_valid_user, user_client):
     """
     Ensure we can add new subject.
     """
-    user = create_valid_user
     response = user_client.post(
         "/api/v1/subjects/",
-        {"title": "", "description": "test test test", "user": user.pk},
+        {"title": "", "description": "test test test"},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -52,24 +50,20 @@ def test_post_uniqueness(create_valid_user, user_client):
     """
     Ensure we can't add equal subject.
     """
-    user = create_valid_user
     response = user_client.post(
         "/api/v1/subjects/",
         {
             "title": "Python core",
             "description": "Introduction to python",
-            "user": user.pk,
         },
     )
     assert response.status_code == status.HTTP_201_CREATED
 
-    user = create_valid_user
     response = user_client.post(
         "/api/v1/subjects/",
         {
             "title": "Python core",
             "description": "Introduction to python",
-            "user": user.pk,
         },
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST

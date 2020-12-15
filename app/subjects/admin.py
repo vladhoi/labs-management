@@ -3,7 +3,7 @@ from .models import Subject
 
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "user")
+    list_display = ("title", "description")
     ordering = ("title",)
 
 
