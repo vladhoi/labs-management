@@ -13,13 +13,39 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Snippets API",
+        default_version="v1",
+        description="Labs management api docs.",
+        terms_of_service="https://www.google.com/policies/terms/",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+swagger_url_patterns = [
+    path(
+        "api/v1/docs/swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path(
+        "api/v1/docs/redoc/",
+        schema_view.with_ui("redoc", cache_timeout=0),
+        name="schema-redoc",
+    ),
+]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,3 +56,5 @@ urlpatterns = [
     path("api/v1/submissions/", include("submissions.urls")),
     path("api/v1/assignments/", include("assignments.urls")),
 ]
+
+urlpatterns += swagger_url_patterns

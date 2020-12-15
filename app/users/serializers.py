@@ -18,6 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ("id", "email", "is_staff", "is_student")
+        ref_name = "Custom User serializer"
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
