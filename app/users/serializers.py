@@ -29,3 +29,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ("user", "first_name", "last_name", "group", "subjects")
         depth = 1
+
+
+class UserGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ("group",)
