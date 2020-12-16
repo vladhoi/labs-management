@@ -97,7 +97,6 @@ def test_user_groups_list_response(user_with_profile, user_client):
     Ensure we can connect to user groups list url.
     """
     user_with_profile(group="IPZ-41")
-    user_with_profile(group="IPZ-31")
     endpoint = "/api/v1/users/groups/"
     response = user_client.get(endpoint)
 
