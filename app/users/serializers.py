@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import UserProfile
+from subjects.serializers import UserSubjectSerializer
 
 
 class NewUserSerializer(serializers.ModelSerializer):
@@ -21,8 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
+    subjects = UserSubjectSerializer(many=True, read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ("user", "first_name", "last_name", "group")
+        fields = ("user", "first_name", "last_name", "group", "subjects")
         depth = 1

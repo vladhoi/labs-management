@@ -6,13 +6,13 @@ from rest_framework.validators import UniqueTogetherValidator
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ("id", "title", "description", "user")
+        fields = ("id", "title", "description")
 
         validators = [
             UniqueTogetherValidator(
                 queryset=Subject.objects.all(),
-                fields=["title", "user"],
-                message="Subject with this title and user already exists",
+                fields=["title"],
+                message="Subject with this title already exists",
             )
         ]
 
@@ -21,3 +21,9 @@ class SubjectSerializer(serializers.ModelSerializer):
         Create and return a new `Subject` instance, given the validated data.
         """
         return Subject.objects.create(**validated_data)
+
+
+class UserSubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        exclude = ("users",)

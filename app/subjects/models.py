@@ -1,16 +1,18 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.conf import settings
+from utils.models import AbstractTableMeta
 
 
-class Subject(models.Model):
+class Subject(AbstractTableMeta, models.Model):
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=["title", "user"], name="unique_subject")
-        ]
+        constraints = [models.UniqueConstraint(fields=["title"], name="unique_subject")]
 
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField()
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="related_user"
+    )
 
     def __str__(self):
         return self.title

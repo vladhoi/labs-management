@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from .managers import CustomUserManager
+from subjects.models import Subject
 
 
 class User(AbstractBaseUser):
@@ -37,6 +38,8 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     group = models.CharField(max_length=100)
+
+    subjects = models.ManyToManyField(Subject, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

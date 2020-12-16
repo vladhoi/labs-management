@@ -47,7 +47,6 @@ def create_valid_subject(create_valid_user):
     data = {
         "title": "Subject_1",
         "description": "Description",
-        "user": create_valid_user,
     }
     return Subject.objects.create(**data)
 
@@ -131,9 +130,9 @@ def create_second_valid_subject(create_valid_user):
     Make fixture that returns valid subject.
     """
     data = {
+        "created_by": create_valid_user,
         "title": "Subject_2",
         "description": "Description",
-        "user": create_valid_user,
     }
     return Subject.objects.create(**data)
 

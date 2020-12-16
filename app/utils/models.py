@@ -1,15 +1,24 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.conf import settings
 
 
 class AbstractTableMeta(models.Model):
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField(default=timezone.now)
     created_by = models.ForeignKey(
-        get_user_model(), on_delete=models.DO_NOTHING, related_name="+"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name="+",
+        default=None,
+        null=True,
     )
-    updated_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(default=timezone.now)
     modified_by = models.ForeignKey(
-        get_user_model(), on_delete=models.DO_NOTHING, related_name="+"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name="+",
+        default=None,
+        null=True,
     )
 
     class Meta:
