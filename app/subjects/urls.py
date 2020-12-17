@@ -14,9 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from rest_framework import routers
-from .views import SubjectViewList
+from .views import SubjectViewList, SubjectLectureListView
+from django.urls import path
 
 
 router = routers.DefaultRouter()
 router.register("", SubjectViewList, basename="subjects")
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        "<int:pk>/lectures/", SubjectLectureListView.as_view(), name="subject-lectures"
+    ),
+]
+urlpatterns += router.urls

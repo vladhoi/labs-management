@@ -67,3 +67,18 @@ def test_post_uniqueness(create_valid_user, user_client):
         },
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_subject_lectures_response(
+    user_client, create_valid_lecture, create_second_valid_lecture
+):
+    """
+    Ensure we get lectures list for one subject
+    """
+    lecture = create_valid_lecture
+    create_second_valid_lecture
+
+    response = user_client.get(f"/api/v1/subjects/{lecture.subject.id}/lectures/")
+
+    assert response.status_code == status.HTTP_200_OK

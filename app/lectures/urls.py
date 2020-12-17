@@ -1,5 +1,4 @@
 from rest_framework import routers
-
 from .views import LectureViewList
 
 router = routers.DefaultRouter()

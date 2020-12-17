@@ -4,7 +4,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserSerializer, NewUserSerializer, UserProfileSerializer
+from .serializers import (
+    UserSerializer,
+    NewUserSerializer,
+    UserProfileSerializer,
+    UserGroupSerializer,
+)
 from .models import User, UserProfile
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
@@ -59,5 +64,17 @@ class GroupUserListView(ListAPIView):
         group = kwargs.get("group", "")
         queryset = UserProfile.objects.filter(group=group)
         serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+
+@permission_classes([IsAuthenticated])
+class UserGroupList(ListAPIView):
+    queryset = UserProfile.objects.distinct("group").only("group")
+    serializer_class = UserGroupSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = UserGroupSerializer(queryset, many=True)
 
         return Response(serializer.data)

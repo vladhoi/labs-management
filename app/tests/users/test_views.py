@@ -89,3 +89,16 @@ def test_user_group_list_response(user_with_profile, user_client):
     response = user_client.get(endpoint)
 
     assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.skip(reason="dont work on GitLab")
+@pytest.mark.django_db
+def test_user_groups_list_response(user_with_profile, user_client):
+    """
+    Ensure we can connect to user groups list url.
+    """
+    user_with_profile(group="IPZ-41")
+    endpoint = "/api/v1/users/groups/"
+    response = user_client.get(endpoint)
+
+    assert response.status_code == status.HTTP_200_OK
