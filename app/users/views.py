@@ -70,7 +70,7 @@ class GroupUserListView(ListAPIView):
 
 @permission_classes([IsAuthenticated])
 class UserGroupList(ListAPIView):
-    queryset = UserProfile.objects.only("group").distinct("group")
+    queryset = UserProfile.objects.distinct("group").only("group")
     serializer_class = UserGroupSerializer
 
     def list(self, request, *args, **kwargs):
