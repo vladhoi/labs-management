@@ -3,7 +3,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import (
     UserSerializer,
     NewUserSerializer,
@@ -68,7 +68,7 @@ class GroupUserListView(ListAPIView):
         return Response(serializer.data)
 
 
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 class UserGroupList(ListAPIView):
     queryset = UserProfile.objects.distinct("group").only("group")
     serializer_class = UserGroupSerializer
