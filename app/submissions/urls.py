@@ -1,6 +1,14 @@
 from rest_framework import routers
-from .views import SubmissionViewList
+from .views import SubmissionViewList, FileDownloadListAPIView
+from django.urls import path
 
 router = routers.DefaultRouter()
 router.register("", SubmissionViewList, basename="submissions")
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        "file/<str:folder>/<str:year>/<str:month>/<str:day>/<str:filename>/",
+        FileDownloadListAPIView.as_view(),
+        name="submission-file",
+    ),
+]
+urlpatterns += router.urls

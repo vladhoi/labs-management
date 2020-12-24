@@ -2,6 +2,7 @@ import pytest
 from rest_framework import status
 from rest_framework.reverse import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
+from submissions.models import Submission
 
 
 @pytest.mark.django_db
@@ -66,3 +67,28 @@ def test_post_submission_failure(
         },
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_file_response(user_client, create_valid_submission):
+    """
+    Ensure we get  file.
+    """
+    create_valid_submission
+    submissions = Submission.objects.all()
+    submission = submissions[0]
+    submission_file = submission.attached_file
+    url = f"/api/v1/submissions/file/{submission_file}/"
+    response = user_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_file_error_response(create_valid_user, user_client, create_valid_submission):
+    """
+    Ensure we get error 404 while trying to get non-exist file.
+    """
+    create_valid_submission
+    url = "/api/v1/submissions/file/labs/1933/10/12/labtest.txt/"
+    response = user_client.get(url)
+    assert response.status_code == status.HTTP_404_NOT_FOUND
