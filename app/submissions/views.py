@@ -14,18 +14,11 @@ class SubmissionViewList(viewsets.ModelViewSet):
 
 class FileDownloadListAPIView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
-        folder = kwargs.get("folder", "")
-        year = kwargs.get("year", "")
-        month = kwargs.get("month", "")
-        day = kwargs.get("day", "")
         filename = kwargs.get("filename", "")
-        attached_file = f"{folder}/{year}/{month}/{day}/{filename}"
-        queryset = get_object_or_404(Submission, attached_file=attached_file)
+        queryset = get_object_or_404(Submission, attached_file__contains=filename)
         document = queryset.attached_file.open()
         response = HttpResponse(
             FileWrapper(document), content_type="application/msword"
         )
-        response[
-            "Content-Disposition"
-        ] = f"attachment; filename={queryset.attached_file}"
+        response["Content-Disposition"] = f"attachment; filename={filename}"
         return response

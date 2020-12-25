@@ -6,7 +6,7 @@ router = routers.DefaultRouter()
 router.register("", SubmissionViewList, basename="submissions")
 urlpatterns = [
     path(
-        "file/<str:folder>/<str:year>/<str:month>/<str:day>/<str:filename>/",
+        "file/<str:filename>/",
         FileDownloadListAPIView.as_view(),
         name="submission-file",
     ),
