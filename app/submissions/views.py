@@ -21,8 +21,7 @@ class FileDownloadListAPIView(generics.ListAPIView):
         filename = kwargs.get("filename", "")
         attached_file = f"{folder}/{year}/{month}/{day}/{filename}"
         queryset = get_object_or_404(Submission, attached_file=attached_file)
-        file_handle = queryset.attached_file.open()
-        document = file_handle
+        document = queryset.attached_file.open()
         response = HttpResponse(
             FileWrapper(document), content_type="application/msword"
         )
