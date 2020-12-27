@@ -71,7 +71,7 @@ def test_post_submission_failure(
 @pytest.mark.django_db
 def test_file_response(user_client, create_valid_submission):
     """
-    Ensure we can  get  file by filename.
+    Ensure we can  get  file.
     """
     create_valid_submission
     url = "/api/v1/submissions/file/labtest.txt/"
