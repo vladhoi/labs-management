@@ -12,7 +12,7 @@ class SubmissionViewList(viewsets.ModelViewSet):
     queryset = Submission.objects.all()
 
 
-class FileDownloadListAPIView(generics.RetrieveAPIView):
+class FileDownloadAPIView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         filename = kwargs.get("filename", "")
         queryset = get_object_or_404(Submission, attached_file__contains=filename)
