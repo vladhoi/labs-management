@@ -73,7 +73,6 @@ def test_file_response(user_client, create_valid_submission):
     """
     Ensure we can  get  file.
     """
-    create_valid_submission
     url = "/api/v1/submissions/file/labtest.txt/"
     response = user_client.get(url)
     assert response.status_code == status.HTTP_200_OK
@@ -84,7 +83,6 @@ def test_file_error_response(create_valid_user, user_client, create_valid_submis
     """
     Ensure we get error 404 while trying to get non-exist file.
     """
-    create_valid_submission
     url = "/api/v1/submissions/file/notlabtest.txt/"
     response = user_client.get(url)
     assert response.status_code == status.HTTP_404_NOT_FOUND
