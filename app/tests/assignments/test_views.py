@@ -45,3 +45,14 @@ def test_post_assignment_failure(create_valid_user, user_client):
         {"title": "", "description": "test test test", "created_by": user.pk},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_user_assignment(create_valid_assignment, user_client):
+    """
+    Ensure we can get users assignments
+    """
+    url = "/api/v1/assignments/user/1/"
+    response = user_client.get(url)
+
+    assert response.status_code == status.HTTP_200_OK
