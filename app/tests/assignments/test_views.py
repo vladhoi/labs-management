@@ -56,3 +56,16 @@ def test_user_assignment(create_valid_assignment, user_client):
     response = user_client.get(url)
 
     assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_assignment_submissions(
+    create_valid_assignment, create_valid_submission, user_client
+):
+    """
+    Ensure we can get submissions for one assignment
+    """
+    url = "/api/v1/assignments/1/submissions"
+    response = user_client.get(url)
+
+    assert response.status_code == status.HTTP_200_OK

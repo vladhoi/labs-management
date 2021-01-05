@@ -1,5 +1,9 @@
 from rest_framework import routers
-from .views import AssignmentViewList, UserAssignmentsViewList
+from .views import (
+    AssignmentViewList,
+    UserAssignmentsViewList,
+    AssignmentSubmissionsViewList,
+)
 from django.urls import path
 
 router = routers.DefaultRouter()
@@ -10,6 +14,11 @@ urlpatterns = [
         "user/<int:id>/",
         UserAssignmentsViewList.as_view(),
         name="user-assignments",
+    ),
+    path(
+        "<int:id>/submissions",
+        AssignmentSubmissionsViewList.as_view(),
+        name="assignment-submissions",
     ),
 ]
 urlpatterns += router.urls
