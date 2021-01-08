@@ -9,7 +9,7 @@ class Submission(models.Model):
     attached_file = models.FileField(
         upload_to="labs/%Y/%m/%d/", storage=OverwriteFileSystemStorage
     )
-    assignment = models.ForeignKey(Assignment, on_delete=models.DO_NOTHING)
+    assignment = models.ForeignKey(Assignment, on_delete=models.PROTECT)
     created_by = models.ForeignKey(
         get_user_model(), on_delete=models.DO_NOTHING, related_name="+"
     )

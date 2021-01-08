@@ -7,7 +7,7 @@ class Assignment(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, default="")
     created_by = models.ForeignKey(
-        get_user_model(), on_delete=models.DO_NOTHING, related_name="+"
+        get_user_model(), on_delete=models.PROTECT, related_name="+"
     )
 
     created_at = models.DateField(auto_now_add=True)
